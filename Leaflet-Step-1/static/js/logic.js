@@ -5,6 +5,7 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/2
   id: "light-v10",
   accessToken: API_KEY
 });
+
 // satellite map
 var satellitemap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
@@ -12,6 +13,7 @@ var satellitemap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/til
   id: "satellite-streets-v11",
   accessToken: API_KEY
 });
+
 // outdoor map
 var outdoormap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/256/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
@@ -44,12 +46,12 @@ var overlayMaps = {
   "Tectonic Plates": tectonicplates
 };
   
-// Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
+// Create a layer control, passing the baseMaps and overlayMaps. Add the layer control to the map
 L.control.layers(baseMaps, overlayMaps, { 
   collapsed: false
 }).addTo(map);
 
-// json pull for all earthquakes 
+// json pull for earthquake data
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson", function(data) {
   // function to retrieve magnitude of earthquake
   function styleInfo(feature) {
@@ -63,6 +65,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
       weight: 0.3
     };
   }
+
   // function to assign colors for each magnitude size
   function getColor(magnitude) {
     switch (true) {
@@ -80,12 +83,12 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojs
         return "#feedde";
     }
   }
+
   //function for radius of magnitude
   function getRadius(magnitude) {
     if (magnitude === 0) {
       return 1;
     }
-
     return magnitude * 3;
   }
 
